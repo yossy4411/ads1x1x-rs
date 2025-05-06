@@ -229,6 +229,7 @@ pub use crate::types::{
     DataRate12Bit, DataRate16Bit, Error, FullScaleRange, ModeChangeError, TargetAddr,
 };
 
+#[cfg(feature = "async")]
 mod asyncio;
 
 mod private {
