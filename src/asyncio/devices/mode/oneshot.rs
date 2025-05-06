@@ -56,28 +56,22 @@ where
     /// In case a measurement was requested and after is it is finished a
     /// measurement on a different channel is requested, a new measurement on
     /// using the new channel selection is triggered.
-    #[allow(unused_variables)]
-    pub async fn read<CH: ChannelId<Self>>(&mut self, channel: CH) -> nb::Result<i16, Error<E>> {
-        if self
-            .is_measurement_in_progress().await
-            .map_err(nb::Error::Other)?
-        {
-            return Err(nb::Error::WouldBlock);
-        }
+    pub async fn read<CH: ChannelId<Self>>(&mut self, _: CH) -> Result<i16, Error<E>> {
         let config = self.config.with_mux_bits(CH::channel_id());
         let same_channel = self.config == config;
-        if self.a_conversion_was_started && same_channel {
-            // result is ready
-            let value = self
-                .read_register(Register::CONVERSION).await
-                .map_err(nb::Error::Other)?;
-            self.a_conversion_was_started = false;
-            return Ok(CONV::convert_measurement(value));
+
+        if !self.a_conversion_was_started || !same_channel {
+            self.trigger_measurement(&config).await?;
+            self.config = config;
+            self.a_conversion_was_started = true;
         }
-        self.trigger_measurement(&config).await
-            .map_err(nb::Error::Other)?;
-        self.config = config;
-        self.a_conversion_was_started = true;
-        Err(nb::Error::WouldBlock)
+
+        loop {
+            if !self.is_measurement_in_progress().await? {
+                let value = self.read_register(Register::CONVERSION).await?;
+                self.a_conversion_was_started = false;
+                return Ok(CONV::convert_measurement(value));
+            }
+        }
     }
 }

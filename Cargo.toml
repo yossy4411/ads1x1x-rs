@@ -21,7 +21,7 @@ include = [
 edition = "2021"
 
 [dependencies]
-nb = "1"
+nb = { version = "1", optional = true }
 embedded-hal = "1"
 embedded-hal-async = { version = "1", optional = true }
 
@@ -36,5 +36,5 @@ lto = true
 
 [features]
 default = ["sync"]
-sync = []
+sync = ["nb"]
 async = ["embedded-hal-async"]
