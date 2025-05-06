@@ -1,6 +1,7 @@
 //! Common functions.
 
-use crate::{devices::OperatingMode, Ads1x1x, BitFlags, Config, Error, Register};
+use crate::{Ads1x1x, BitFlags, Config, Error, Register};
+use crate::asyncio::devices::OperatingMode;
 
 impl<I2C, IC, CONV, MODE, E> Ads1x1x<I2C, IC, CONV, MODE>
 where

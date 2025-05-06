@@ -1,8 +1,9 @@
 //! Continuous measurement mode.
 
 use crate::{
-    conversion, devices::OperatingMode, mode, Ads1x1x, ChannelId, Error, ModeChangeError, Register,
+    conversion, mode, Ads1x1x, ChannelId, Error, ModeChangeError, Register,
 };
+use crate::asyncio::devices::OperatingMode;
 use core::marker::PhantomData;
 
 impl<I2C, IC, CONV, E> Ads1x1x<I2C, IC, CONV, mode::Continuous>

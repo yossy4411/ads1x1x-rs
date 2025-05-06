@@ -3,9 +3,11 @@
 use core::marker::PhantomData;
 
 use crate::{
-    conversion, devices::OperatingMode, mode, Ads1x1x, BitFlags, ChannelId, Config, Error,
+    conversion, mode, Ads1x1x, BitFlags, ChannelId, Config, Error,
     ModeChangeError, Register,
 };
+
+use crate::asyncio::devices::OperatingMode;
 
 impl<I2C, IC, CONV, E> Ads1x1x<I2C, IC, CONV, mode::OneShot>
 where
