@@ -219,6 +219,7 @@ pub use channel::ChannelId;
 mod construction;
 mod conversion;
 pub use crate::conversion::{ConvertMeasurement, ConvertThreshold};
+#[cfg(feature = "sync")]
 mod devices;
 #[doc(hidden)]
 pub mod ic;
@@ -231,6 +232,8 @@ pub use crate::types::{
 
 #[cfg(feature = "async")]
 mod asyncio;
+#[cfg(feature = "async")]
+pub use asyncio::*;
 
 mod private {
     use super::{ic, Ads1x1x};
