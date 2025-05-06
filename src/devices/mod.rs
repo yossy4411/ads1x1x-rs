@@ -1,5 +1,5 @@
 #[derive(Debug, Clone, Copy)]
-enum OperatingMode {
+pub(crate) enum OperatingMode {
     OneShot,
     Continuous,
 }

@@ -219,10 +219,6 @@ pub use channel::ChannelId;
 mod construction;
 mod conversion;
 pub use crate::conversion::{ConvertMeasurement, ConvertThreshold};
-#[cfg(feature = "async")]
-mod asyncio;
-#[cfg(feature = "async")]
-pub use asyncio::*;
 #[cfg(feature = "sync")]
 mod devices;
 #[doc(hidden)]
@@ -233,6 +229,11 @@ pub use crate::types::{
     mode, Ads1x1x, ComparatorLatching, ComparatorMode, ComparatorPolarity, ComparatorQueue,
     DataRate12Bit, DataRate16Bit, Error, FullScaleRange, ModeChangeError, TargetAddr,
 };
+
+#[cfg(feature = "async")]
+mod asyncio;
+#[cfg(feature = "async")]
+pub use asyncio::*;
 
 mod private {
     use super::{ic, Ads1x1x};
