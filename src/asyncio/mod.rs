@@ -187,4 +187,3 @@
 #![no_std]
 
 mod devices;
-mod types;
